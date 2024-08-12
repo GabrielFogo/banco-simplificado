@@ -28,76 +28,61 @@ public class AuthController : ControllerBase
     [Route("Register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        try
-        {
-            var userExists = await _unitOfWork.UserRepository.GetAsync(user => user.Name == registerDto.Name);
+        var userExists = await _unitOfWork.UserRepository.GetAsync(user => user.Name == registerDto.Name);
 
-            if (userExists is not null)
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new Response()
-                    {
-                        Status = "Error",
-                        Message = "Usuario já existe"
-                    });
-
-            var user = new User()
-            {
-                Cpf = registerDto.Cpf,
-                Name = registerDto.Name,
-                Email = registerDto.Email,
-                Password = registerDto.Password,
-                Role = registerDto.Role
-            };
-
-            _unitOfWork.UserRepository.Create(user);
-            await _unitOfWork.CommitAsync();
-
-            return Ok(new Response() { Status = "Success", Message = "Usuario criado com sucesso" });
-        }
-        catch (Exception e)
-        {
+        if (userExists is not null)
             return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response() { Status = "Error", Message = e.Message });
-        }
+                new Response()
+                {
+                    Status = "Error",
+                    Message = "Usuario já existe"
+                });
+
+        var user = new User()
+        {
+            Cpf = registerDto.Cpf,
+            Name = registerDto.Name,
+            Email = registerDto.Email,
+            Password = registerDto.Password,
+            Role = registerDto.Role
+        };
+
+        _unitOfWork.UserRepository.Create(user);
+        await _unitOfWork.CommitAsync();
+
+        return Ok(new Response() { Status = "Success", Message = "Usuario criado com sucesso" });
     }
    
     [HttpPost]
     [Route("Login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        try
+        
+        var user = await _unitOfWork.UserRepository.GetAsync(user => user.Email == loginDto.Email);
+
+        if (user is null)
+            return StatusCode(StatusCodes.Status401Unauthorized, 
+                new Response(){ Status = "Error", Message = "User not exist" });
+
+        if (user.Password != loginDto.Password)
+            return StatusCode(StatusCodes.Status401Unauthorized, 
+                new Response(){ Status = "Error", Message = "Incorrect email or password" });
+
+        var authClaims = new List<Claim>()
         {
-            var user = await _unitOfWork.UserRepository.GetAsync(user => user.Email == loginDto.Email);
+            new Claim(ClaimTypes.Name, user.Name!),
+            new Claim(ClaimTypes.Role, user.Role.ToString()!),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
-            if (user is null)
-                return StatusCode(StatusCodes.Status401Unauthorized, 
-                    new Response(){ Status = "Error", Message = "User not exist" });
-
-            if (user.Password != loginDto.Password)
-                return StatusCode(StatusCodes.Status401Unauthorized, 
-                    new Response(){ Status = "Error", Message = "Incorrect email or password" });
-
-            var authClaims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.Name!),
-                new Claim(ClaimTypes.Role, user.Role.ToString()!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = _tokenService.GenerateAcessToken(authClaims, _configuration);
-            
-            return Ok(new
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo,
-            });
-
-        }
-        catch (Exception e)
+        var token = _tokenService.GenerateAcessToken(authClaims, _configuration);
+        
+        return Ok(new
         {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response() { Status = "Error", Message = e.Message });
-        }
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiration = token.ValidTo,
+        });
+        
     }
     
 }
