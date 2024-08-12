@@ -1,0 +1,90 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.idea/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Production
+/build
+/dist
+out/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.iml
+*.suo
+*.dll
+*.pdb
+*.exe
+*.cache
+.vscode/
+
+# Visual Studio 2019/2022
+.vscode/
+.vs/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/jsconfig.json
+.vscode/c_cpp_properties.json
+
+# ASP.NET
+bin/
+obj/
+*.csproj.user
+*.csproj~ 
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Caches
+.vscode/
+*.vs
+*.swp
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+
+# ASP.NET Core environment variables
+.env
+.env.*
+
+# Local history for Visual Studio
+.vscode/.history/
