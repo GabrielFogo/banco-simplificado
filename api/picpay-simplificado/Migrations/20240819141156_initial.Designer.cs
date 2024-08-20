@@ -12,7 +12,7 @@ using picpay_simplificado.Context;
 namespace picpay_simplificado.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240811014155_initial")]
+    [Migration("20240819141156_initial")]
     partial class initial
     {
         /// <inheritdoc />

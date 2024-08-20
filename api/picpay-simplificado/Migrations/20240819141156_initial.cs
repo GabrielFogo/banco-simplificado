@@ -33,10 +33,10 @@ namespace picpay_simplificado.Migrations
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SenderUserCpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
                     RecipientUserCpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    RealeaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    RealeaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderUserCpf = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true)
                 },
                 constraints: table =>
                 {
