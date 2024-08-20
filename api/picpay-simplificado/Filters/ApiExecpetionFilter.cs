@@ -9,7 +9,6 @@ public class ApiExecpetionFilter : IExceptionFilter
     {
         var exception = context.Exception;
         var exceptionMessage = exception.Message;
-        var exceptionStackTrace = exception.StackTrace;
         var exceptionType = exception.GetType().Name;
 
         var problemDetails = new ProblemDetails()
