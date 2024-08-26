@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using picpay_simplificado.Models;
 
-namespace picpay_simplificado.DTOs;
+namespace picpay_simplificado.DTOs.Resquests;
 
-public record RegisterDto
+public record RegisterRequest
 {
     [Key]
     [Required]
@@ -24,4 +24,8 @@ public record RegisterDto
     [Required]
     [MaxLength(30)]
     public string? Password { get; set; }
-}
+    
+    [Required]
+    [MaxLength(30)]
+    public string? ConfirmPassword { get; set; }
+};
