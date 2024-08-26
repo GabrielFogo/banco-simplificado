@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using picpay_simplificado.DTOs;
 using picpay_simplificado.DTOs.Responses;
@@ -29,13 +28,13 @@ public class AuthController : ControllerBase
     
     [HttpPost]
     [Route("Register")]
-    public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
+    public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
     {
-        var userExists = await _unitOfWork.UserRepository.GetAsync(user => user.Cpf == registerDto.Cpf);
+        var userExists = await _unitOfWork.UserRepository.GetAsync(user => user.Cpf == registerRequest.Cpf);
 
         if (userExists is not null)
             return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response()
+                new RegisterResponse()
                 {
                     Status = "Error",
                     Message = "Usuario já existe"
@@ -43,17 +42,17 @@ public class AuthController : ControllerBase
 
         var user = new User()
         {
-            Cpf = registerDto.Cpf,
-            Name = registerDto.Name,
-            Email = registerDto.Email,
-            Password = registerDto.Password,
-            Role = registerDto.Role
+            Cpf = registerRequest.Cpf,
+            Name = registerRequest.Name,
+            Email = registerRequest.Email,
+            Password = registerRequest.Password,
+            Role = registerRequest.Role
         };
 
         _unitOfWork.UserRepository.Create(user);
         await _unitOfWork.CommitAsync();
 
-        return Ok(new Response() { Status = "Success", Message = "Usuario criado com sucesso" });
+        return Ok(new RegisterResponse() { Status = "Success", Message = "Usuario criado com sucesso" });
     }
    
     [HttpPost]
