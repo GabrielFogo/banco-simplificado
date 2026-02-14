@@ -1,7 +1,7 @@
-﻿using System.Text.Json.Serialization;
-using picpay_simplificado.Filters;
+﻿using BancoSimplificado.Api.Filters;
+using System.Text.Json.Serialization;
 
-namespace picpay_simplificado.Configs;
+namespace BancoSimplificado.Api.Configs;
 
 public static class MvcConfig
 {

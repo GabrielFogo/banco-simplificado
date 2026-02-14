@@ -1,10 +1,9 @@
-﻿using picpay_simplificado.Interfaces;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Interfaces.Services;
-using picpay_simplificado.Repositories;
-using picpay_simplificado.Services;
+﻿using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Interfaces.Services;
+using BancoSimplificado.Api.Repositories;
+using BancoSimplificado.Api.Services;
 
-namespace picpay_simplificado.Configs;
+namespace BancoSimplificado.Api.Configs;
 
 public static class DependencyInjectionConfig
 {

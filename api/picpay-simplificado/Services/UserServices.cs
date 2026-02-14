@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
-using picpay_simplificado.DTOs;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Interfaces.Services;
-using picpay_simplificado.Models;
+﻿using BancoSimplificado.Api.DTOs;
+using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Interfaces.Services;
+using BancoSimplificado.Api.Models;
+using System.Security.Claims;
 
-namespace picpay_simplificado.Services;
+namespace BancoSimplificado.Api.Services;
 
 public class UserServices : IUserService
 {
@@ -26,7 +26,7 @@ public class UserServices : IUserService
     public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
         var users = await _unitOfWork.UserRepository.GetAllAsync();
-        
+
         var usersDto = users.Select(user => new UserDto
         {
             Name = user.Name,
@@ -34,10 +34,10 @@ public class UserServices : IUserService
             Email = user.Email,
             Role = user.Role
         }).ToList();
-        
+
         return usersDto;
     }
-    
+
     public bool CanUserPerformTransaction(User user, decimal amount)
     {
         return user.Role != UserType.Seller && user.Balance >= amount;

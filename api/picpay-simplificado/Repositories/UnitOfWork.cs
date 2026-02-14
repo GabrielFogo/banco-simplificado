@@ -1,7 +1,7 @@
-﻿using picpay_simplificado.Context;
-using picpay_simplificado.Interfaces.Repositories;
+﻿using BancoSimplificado.Api.Context;
+using BancoSimplificado.Api.Interfaces.Repositories;
 
-namespace picpay_simplificado.Repositories;
+namespace BancoSimplificado.Api.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
@@ -33,6 +33,6 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task CommitAsync()
     {
-       await Context.SaveChangesAsync();
+        await Context.SaveChangesAsync();
     }
 }

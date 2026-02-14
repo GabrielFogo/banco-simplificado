@@ -1,8 +1,8 @@
-﻿using picpay_simplificado.Models;
+﻿using BancoSimplificado.Api.Models;
 
-namespace picpay_simplificado.Interfaces.Repositories;
+namespace BancoSimplificado.Api.Interfaces.Repositories;
 
 public interface IUserRepository : IRepository<User>
 {
-        
+
 }

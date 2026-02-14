@@ -1,4 +1,4 @@
-﻿namespace picpay_simplificado.DTOs;
+﻿namespace BancoSimplificado.Api.DTOs;
 
 public abstract record Response
 {

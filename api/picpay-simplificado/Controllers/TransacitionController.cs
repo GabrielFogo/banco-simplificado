@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BancoSimplificado.Api.DTOs.Responses;
+using BancoSimplificado.Api.DTOs.Resquests;
+using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Interfaces.Services;
+using BancoSimplificado.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using picpay_simplificado.DTOs.Responses;
-using picpay_simplificado.DTOs.Resquests;
-using picpay_simplificado.Interfaces;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Models;
 
-namespace picpay_simplificado.Controllers;
+namespace BancoSimplificado.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
@@ -29,7 +29,7 @@ public class TransacitionController : ControllerBase
         var transactions = await _transactionServices.GetTransactionAsync(User);
         return Ok(transactions);
     }
-    
+
     [HttpPost]
     [Authorize]
     public async Task<ActionResult<PerformTransactionResponse>> PerformTransaction([FromBody] PerformTransactionRequest performTransactionRequest)
@@ -37,5 +37,5 @@ public class TransacitionController : ControllerBase
         var transaction = await _transactionServices.PerformTransactionAsync(User, performTransactionRequest);
         return Ok(transaction);
     }
-    
+
 }

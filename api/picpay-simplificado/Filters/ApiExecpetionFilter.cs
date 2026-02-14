@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace picpay_simplificado.Filters;
+namespace BancoSimplificado.Api.Filters;
 
 public class ApiExecpetionFilter : IExceptionFilter
 {
@@ -19,7 +19,7 @@ public class ApiExecpetionFilter : IExceptionFilter
             Detail = exceptionMessage,
             Instance = context.HttpContext.Request.Path
         };
-        
+
         context.Result = new ObjectResult(problemDetails)
         {
             StatusCode = StatusCodes.Status500InternalServerError,

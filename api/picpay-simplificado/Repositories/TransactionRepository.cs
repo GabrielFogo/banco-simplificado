@@ -1,8 +1,8 @@
-﻿using picpay_simplificado.Context;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Models;
+﻿using BancoSimplificado.Api.Context;
+using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Models;
 
-namespace picpay_simplificado.Repositories;
+namespace BancoSimplificado.Api.Repositories;
 
 public class TransactionRepository : Repository<Transaction>, ITransactionRepository
 {

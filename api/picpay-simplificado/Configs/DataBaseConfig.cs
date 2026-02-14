@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using picpay_simplificado.Context;
+﻿using BancoSimplificado.Api.Context;
+using Microsoft.EntityFrameworkCore;
 
-namespace picpay_simplificado.Configs;
+namespace BancoSimplificado.Api.Configs;
 
 public static class DatabaseConfig
 {

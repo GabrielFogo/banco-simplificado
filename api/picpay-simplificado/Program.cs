@@ -1,4 +1,6 @@
-using picpay_simplificado.Configs;
+using BancoSimplificado.Api.Configs;
+using BancoSimplificado.Api.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    await context.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();

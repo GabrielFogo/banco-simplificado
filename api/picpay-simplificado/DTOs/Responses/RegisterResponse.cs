@@ -1,3 +1,3 @@
-﻿namespace picpay_simplificado.DTOs.Responses;
+﻿namespace BancoSimplificado.Api.DTOs.Responses;
 
 public record RegisterResponse() : Response();

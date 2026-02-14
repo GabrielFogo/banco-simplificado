@@ -1,10 +1,10 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using BancoSimplificado.Api.Interfaces.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using picpay_simplificado.Interfaces.Services;
 
-namespace picpay_simplificado.Services;
+namespace BancoSimplificado.Api.Services;
 
 public class TokenService : ITokenService
 {
@@ -14,12 +14,12 @@ public class TokenService : ITokenService
                   throw new InvalidOperationException("Invalid Secret key");
 
         var privateKey = Encoding.UTF8.GetBytes(key);
-        
+
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(privateKey),
             SecurityAlgorithms.HmacSha256Signature
             );
-        
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),

@@ -1,4 +1,4 @@
-﻿namespace picpay_simplificado.Interfaces.Repositories;
+﻿namespace BancoSimplificado.Api.Interfaces.Repositories;
 
 public interface IUnitOfWork
 {

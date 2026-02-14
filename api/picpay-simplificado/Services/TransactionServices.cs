@@ -1,13 +1,11 @@
-﻿using System.Security.Claims;
-using picpay_simplificado.DTOs;
-using picpay_simplificado.DTOs.Responses;
-using picpay_simplificado.DTOs.Resquests;
-using picpay_simplificado.Interfaces;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Interfaces.Services;
-using picpay_simplificado.Models;
+﻿using BancoSimplificado.Api.DTOs.Responses;
+using BancoSimplificado.Api.DTOs.Resquests;
+using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Interfaces.Services;
+using BancoSimplificado.Api.Models;
+using System.Security.Claims;
 
-namespace picpay_simplificado.Services;
+namespace BancoSimplificado.Api.Services;
 
 public class TransactionServices : ITransactionServices
 {
@@ -25,7 +23,7 @@ public class TransactionServices : ITransactionServices
     {
         var user = await _userService.GetUserFromClaims(claimsPrincipal);
         var transactions = await _unitOfWork.TransactionRepository.GetTransactionsAsync(user.Cpf);
-        
+
         return transactions;
     }
 
@@ -51,7 +49,7 @@ public class TransactionServices : ITransactionServices
         recipientUser.Balance += performTransactionRequest.Amount;
 
         _unitOfWork.TransactionRepository.Create(transaction);
-        
+
         await _unitOfWork.CommitAsync();
 
         var transactionResponse = new PerformTransactionResponse()
@@ -65,5 +63,4 @@ public class TransactionServices : ITransactionServices
 
         return transactionResponse;
     }
-    
 }

@@ -1,8 +1,8 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace picpay_simplificado.Configs;
+namespace BancoSimplificado.Api.Configs;
 
 public static class AuthenticationConfig
 {

@@ -1,4 +1,4 @@
-﻿namespace picpay_simplificado.Models;
+﻿namespace BancoSimplificado.Api.Models;
 
 public enum UserType
 {

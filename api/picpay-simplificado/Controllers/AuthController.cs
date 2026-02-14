@@ -1,15 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using BancoSimplificado.Api.DTOs.Responses;
+using BancoSimplificado.Api.DTOs.Resquests;
+using BancoSimplificado.Api.Interfaces.Repositories;
+using BancoSimplificado.Api.Interfaces.Services;
+using BancoSimplificado.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using picpay_simplificado.DTOs;
-using picpay_simplificado.DTOs.Responses;
-using picpay_simplificado.DTOs.Resquests;
-using picpay_simplificado.Interfaces.Repositories;
-using picpay_simplificado.Interfaces.Services;
-using picpay_simplificado.Models;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
-namespace picpay_simplificado.Controllers;
+namespace BancoSimplificado.Api.Controllers;
 
 [Route("[controller]")]
 [ApiController]
@@ -25,7 +23,7 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
         _configuration = configuration;
     }
-    
+
     [HttpPost]
     [Route("Register")]
     public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
@@ -54,21 +52,21 @@ public class AuthController : ControllerBase
 
         return Ok(new RegisterResponse() { Status = "Success", Message = "Usuario criado com sucesso" });
     }
-   
+
     [HttpPost]
     [Route("Login")]
     public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginResquest loginRequest)
     {
-        
+
         var user = await _unitOfWork.UserRepository.GetAsync(user => user.Email == loginRequest.Email);
 
         if (user is null)
-            return StatusCode(StatusCodes.Status401Unauthorized, 
-                new LoginResponse(){ Status = "Error", Message = "User not exist" });
+            return StatusCode(StatusCodes.Status401Unauthorized,
+                new LoginResponse() { Status = "Error", Message = "User not exist" });
 
         if (user.Password != loginRequest.Password)
-            return StatusCode(StatusCodes.Status401Unauthorized, 
-                new LoginResponse(){ Status = "Error", Message = "Incorrect email or password" });
+            return StatusCode(StatusCodes.Status401Unauthorized,
+                new LoginResponse() { Status = "Error", Message = "Incorrect email or password" });
 
         var authClaims = new List<Claim>()
         {
@@ -79,7 +77,7 @@ public class AuthController : ControllerBase
         };
 
         var token = _tokenService.GenerateAcessToken(authClaims, _configuration);
-        
+
         return Ok(new LoginResponse()
         {
             Status = "Success",
@@ -87,7 +85,7 @@ public class AuthController : ControllerBase
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Expiration = token.ValidTo,
         });
-        
+
     }
-    
+
 }

@@ -1,9 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using BancoSimplificado.Api.Context;
+using BancoSimplificado.Api.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using picpay_simplificado.Context;
-using picpay_simplificado.Interfaces.Repositories;
+using System.Linq.Expressions;
 
-namespace picpay_simplificado.Repositories;
+namespace BancoSimplificado.Api.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
@@ -12,7 +12,7 @@ public class Repository<T> : IRepository<T> where T : class
     {
         _context = context;
     }
-    
+
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await _context.Set<T>().AsNoTracking().ToListAsync();
@@ -27,9 +27,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
-        
+
         _context.Set<T>().Add(entity);
-        
+
         return entity;
     }
 
@@ -37,9 +37,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
-        
+
         _context.Set<T>().Update(entity);
-        
+
         return entity;
     }
 

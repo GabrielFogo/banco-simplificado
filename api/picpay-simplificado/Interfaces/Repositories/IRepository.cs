@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace picpay_simplificado.Interfaces.Repositories;
+namespace BancoSimplificado.Api.Interfaces.Repositories;
 
 public interface IRepository<T>
 {

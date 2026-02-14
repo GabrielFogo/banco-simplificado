@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace picpay_simplificado.Interfaces.Services;
+namespace BancoSimplificado.Api.Interfaces.Services;
 
 public interface ITokenService
 {

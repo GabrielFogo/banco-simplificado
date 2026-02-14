@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using picpay_simplificado.DTOs;
-using picpay_simplificado.Models;
+﻿using BancoSimplificado.Api.DTOs;
+using BancoSimplificado.Api.Models;
+using System.Security.Claims;
 
-namespace picpay_simplificado.Interfaces.Services;
+namespace BancoSimplificado.Api.Interfaces.Services;
 
 public interface IUserService
 {

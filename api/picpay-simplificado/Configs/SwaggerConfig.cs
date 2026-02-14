@@ -1,40 +1,27 @@
-﻿namespace picpay_simplificado.Configs;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi;
+
+namespace BancoSimplificado.Api.Configs;
 
 public static class SwaggerConfig
 {
     public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(a =>
+        services.AddOpenApi();
+        services.AddSwaggerGen(options =>
         {
-            a.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Title = "apicatalogo",
-                Version = "v1"
-            });
-
-            a.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
-            {
-                Name = "Authorization",
-                Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-                Scheme = "Bearer",
+                Type = SecuritySchemeType.Http,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
                 BearerFormat = "JWT",
-                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                Description = "Bearer JWT"
+                Description = "JWT Authorization header using the Bearer scheme.",
+                In = ParameterLocation.Header,
             });
 
-            a.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+            options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
             {
-                {
-                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                    {
-                        Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                        {
-                            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
-                }
+                [new OpenApiSecuritySchemeReference(JwtBearerDefaults.AuthenticationScheme, document)] = []
             });
         });
 
